@@ -25,3 +25,14 @@ Larger Datasets: Train the model on a larger and more diverse dataset to improve
 Deployment: Integrate the trained model into a web application or an email client to provide real-time spam filtering.
 
 Hyperparameter Tuning: Optimize the model's performance by fine-tuning the hyperparameters of the Logistic Regression model and the TfidfVectorizer.
+
+In the code where we replace the category column values to integer Python issues The warning message FutureWarning: Downcasting behavior in replace is deprecated and will be removed in a future version indicates a change in how the replace method in Pandas handles data types. Previously, replace might have automatically downcasted the data type of a column if the replacement values allowed for a smaller, more memory-efficient type. This automatic downcasting is being phased out.
+
+To overcome this issue you can use this:
+    import pandas as pd
+    pd.set_option('future.no_silent_downcasting', True)
+
+    Y_train = Y_train.replace({'spam': 0, 'ham': 1})
+    Y_test = Y_test.replace({'spam': 0, 'ham': 1})
+By setting this option, you are explicitly opting into the future behavior where replace will not automatically downcast. In this case, Y_train and Y_test will likely retain their original data type (e.g., object if they contained strings) unless you explicitly convert them afterwards (e.g., using .astype(int)).
+
